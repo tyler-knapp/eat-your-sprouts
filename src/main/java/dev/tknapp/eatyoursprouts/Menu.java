@@ -5,6 +5,7 @@ import dev.tknapp.eatyoursprouts.inventory.FileInventoryReader;
 import dev.tknapp.eatyoursprouts.items.Items;
 
 import java.io.FileNotFoundException;
+import java.util.Arrays;
 import java.util.Map;
 import java.util.Scanner;
 
@@ -64,12 +65,22 @@ public class Menu {
                     if(accountUserInput.equals("a")){
                         accountAtAGlance();
                         addMoneyToAccountScreen();
-                        account.addFundsToAccount(convertUserInputToADouble(getUserInput()));
+                        try{
+                            account.addFundsToAccount(convertUserInputToADouble(getUserInput()));
+                        } catch (NumberFormatException e){
+                            System.out.println("Invalid amount " + e.getMessage());
+                            System.out.println("Please enter a numeric value");
+                        }
                     }
                     if(accountUserInput.equals("b")){
                         accountAtAGlance();
-                        withdrawMoneyFromAccountScren();
-                        account.withdrawMoneyFromAccount(convertUserInputToADouble(getUserInput()));
+                        withdrawMoneyFromAccountScreen();
+                        try{
+                            account.withdrawMoneyFromAccount(convertUserInputToADouble(getUserInput()));
+                        } catch (NumberFormatException e){
+                            System.out.println("Invalid amount " + e.getMessage());
+                            System.out.println("Please enter a numeric value");
+                        }
                     }
                     if(accountUserInput.equals("c")){
                         break;
@@ -87,7 +98,7 @@ public class Menu {
          System.out.println();
      }
      
-     public void withdrawMoneyFromAccountScren(){
+     public void withdrawMoneyFromAccountScreen(){
          System.out.println("How much money would you like to withdraw from your account?");
          System.out.println();
      }
