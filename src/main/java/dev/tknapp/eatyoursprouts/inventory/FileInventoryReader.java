@@ -1,7 +1,7 @@
 package dev.tknapp.eatyoursprouts.inventory;
 
 import dev.tknapp.eatyoursprouts.items.Equipment;
-import dev.tknapp.eatyoursprouts.items.Items;
+import dev.tknapp.eatyoursprouts.items.Item;
 import dev.tknapp.eatyoursprouts.items.Sprouts;
 
 import java.io.File;
@@ -15,9 +15,9 @@ import java.util.TreeMap;
 public class FileInventoryReader implements InventoryReader{
     
     @Override
-    public Map<String, Items> read(String filename) throws FileNotFoundException {
+    public Map<String, Item> read(String filename) throws FileNotFoundException {
     
-        Map<String, Items> inventory = new TreeMap<>();
+        Map<String, Item> inventory = new TreeMap<>();
     
         File file = new File(filename);
     
@@ -30,19 +30,19 @@ public class FileInventoryReader implements InventoryReader{
                 String name = parts.get(1);
                 BigDecimal price = BigDecimal.valueOf(Double.parseDouble(parts.get(2)));
                 String type = parts.get(3);
-                
+
                 Inventory newInventory = new Inventory();
             
-                Items newItems = null;
+                Item newItem = null;
                 if (type.equalsIgnoreCase("S")) {
-                    newItems = new Sprouts(code, name, price, type, newInventory.getInitialQuantity());
-                    System.out.println(newItems.getCode() + " " + newItems.getName() + " " + newItems.getPrice() + " " + newItems.getType() + " " + newItems.getQuantity() );
+                    newItem = new Sprouts(code, name, price, type, newInventory.getInitialQuantity());
+                    System.out.println(newItem.getCode() + " " + newItem.getName() + " " + newItem.getPrice() + " " + newItem.getType() + " " + newItem.getQuantity() );
                 }
                 if (type.equalsIgnoreCase("E")) {
-                    newItems = new Equipment(code, name, price, type, newInventory.getInitialQuantity());
-                    System.out.println(newItems.getCode() + " " + newItems.getName() + " " + newItems.getPrice() + " " + newItems.getType() + " " + newItems.getQuantity());
+                    newItem = new Equipment(code, name, price, type, newInventory.getInitialQuantity());
+                    System.out.println(newItem.getCode() + " " + newItem.getName() + " " + newItem.getPrice() + " " + newItem.getType() + " " + newItem.getQuantity());
                 }
-                inventory.put(parts.get(0), newItems);
+                inventory.put(parts.get(0), newItem);
             }
         } catch (Exception e){
             e.printStackTrace();

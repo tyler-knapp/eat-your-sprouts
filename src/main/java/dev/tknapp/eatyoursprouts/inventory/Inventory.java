@@ -1,14 +1,12 @@
 package dev.tknapp.eatyoursprouts.inventory;
 
-import dev.tknapp.eatyoursprouts.items.Items;
+import dev.tknapp.eatyoursprouts.items.Item;
 
-import java.io.FileNotFoundException;
 import java.util.Map;
-import java.util.Set;
 
 public class Inventory {
     
-    private Map<String, Items> foodItems;
+    private Map<String, Item> foodItems;
     private int initialQuantity = 50;
     
     public int getInitialQuantity() {
@@ -18,7 +16,7 @@ public class Inventory {
     public Inventory(){
     }
     
-    public Map<String, Items> getFoodItems() {
+    public Map<String, Item> getFoodItems() {
         return foodItems;
     }
 

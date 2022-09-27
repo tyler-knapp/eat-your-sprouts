@@ -2,19 +2,15 @@ package dev.tknapp.eatyoursprouts;
 
 import dev.tknapp.eatyoursprouts.account.Account;
 import dev.tknapp.eatyoursprouts.inventory.FileInventoryReader;
-import dev.tknapp.eatyoursprouts.items.Items;
+import dev.tknapp.eatyoursprouts.items.ItemDAO;
+import org.apache.tomcat.jni.File;
 
 import java.io.FileNotFoundException;
-import java.util.Arrays;
-import java.util.Map;
 import java.util.Scanner;
 
 public class Menu {
     
-    private final Account account = new Account();
     private static final Scanner scanner = new Scanner(System.in);
-    
-    private final FileInventoryReader fileInventoryReader = new FileInventoryReader();
     
      public void showWelcomeMessage(){
          System.out.println();
@@ -22,74 +18,6 @@ public class Menu {
          System.out.println("******  Welcome to Eat Your Sprouts  ******");
          System.out.println("*******************************************");
          System.out.println();
-     }
-    
-    public void run() throws FileNotFoundException {
-        showWelcomeMessage();
-        menuCLI();
-    }
-     
-     public void menuCLI() throws FileNotFoundException {
-        while(true){
-    
-        displayMainMenuOptions();
-        String mainMenuUserOption = getUserInput().toLowerCase();
-    
-        while(true){
-            if(!mainMenuUserOption.equals("a") && !mainMenuUserOption.equals("b") && !mainMenuUserOption.equals("c")){
-                System.out.println("Please enter a valid option");
-                break;
-            }
-            if(mainMenuUserOption.equals("a")){
-            
-                displayInventoryMenuOptions();
-                String inventoryMenuUserOption = getUserInput().toLowerCase();
-            
-                if(!inventoryMenuUserOption.equals("a") && !inventoryMenuUserOption.equals("b")){
-                    System.out.println("Please enter a valid option");
-                }
-                if(inventoryMenuUserOption.equals("a")){
-                    displayInventoryList();
-                }
-                if(inventoryMenuUserOption.equals("b")){
-                    break;
-                }
-            }
-            if(mainMenuUserOption.equals("b")){
-                displayAccountMenu();
-                String accountUserInput = getUserInput().toLowerCase();
-                    if(!accountUserInput.equals("a") && !accountUserInput.equals("b") && !accountUserInput.equals("c")){
-                        System.out.println("Please enter a valid option");
-                    }
-                    if(accountUserInput.equals("a")){
-                        accountAtAGlance();
-                        addMoneyToAccountScreen();
-                        try{
-                            account.addFundsToAccount(convertUserInputToADouble(getUserInput()));
-                        } catch (NumberFormatException e){
-                            System.out.println("Invalid amount " + e.getMessage());
-                            System.out.println("Please enter a numeric value");
-                        }
-                    }
-                    if(accountUserInput.equals("b")){
-                        accountAtAGlance();
-                        withdrawMoneyFromAccountScreen();
-                        try{
-                            account.withdrawMoneyFromAccount(convertUserInputToADouble(getUserInput()));
-                        } catch (NumberFormatException e){
-                            System.out.println("Invalid amount " + e.getMessage());
-                            System.out.println("Please enter a numeric value");
-                        }
-                    }
-                    if(accountUserInput.equals("c")){
-                        break;
-                    }
-            }
-            if(mainMenuUserOption.equals("c")){
-                System.exit(0);
-            }
-        }
-        }
      }
      
      public void addMoneyToAccountScreen(){
@@ -102,7 +30,7 @@ public class Menu {
          System.out.println();
      }
      
-     public void accountAtAGlance(){
+     public void accountAtAGlance(Account account){
          System.out.println("Your current balance is " + account.getBalance());
      }
      
@@ -137,14 +65,14 @@ public class Menu {
          System.out.println();
      }
      
-     public void displayInventoryList() throws FileNotFoundException {
+     public void displayInventoryList(FileInventoryReader fileInventoryReader) throws FileNotFoundException {
          System.out.println("To view the inventory list, please provide us with the absolute path of the CSV file: ");
          String fileName = getFilename();
          fileInventoryReader.read(fileName);
          System.out.println();
      }
      
-     public void displayAccountMenu(){
+     public void displayAccountMenu(Account account){
          System.out.println("Welcome to your account!");
          System.out.println("You currently have " + account.getBalance() + " dollar(s) in your account");
          System.out.println("Please select an option below to continue");

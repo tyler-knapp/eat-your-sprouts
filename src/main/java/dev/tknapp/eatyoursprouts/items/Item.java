@@ -2,12 +2,22 @@ package dev.tknapp.eatyoursprouts.items;
 
 import java.math.BigDecimal;
 
-public abstract class Items {
+public abstract class Item {
+    private long id;
+    private String code;
+    private String name;
+    private BigDecimal price;
+    private String type;
     
-    private final String code;
-    private final String name;
-    private final BigDecimal price;
-    private final String type;
+    private int quantity = 50;
+    
+    public Item(String code, String name, BigDecimal price, String type, int quantity) {
+        this.code = code;
+        this.name = name;
+        this.price = price;
+        this.type = type;
+        this.quantity = quantity;
+    }
     
     public int getQuantity() {
         return quantity;
@@ -17,23 +27,16 @@ public abstract class Items {
         this.quantity = quantity;
     }
     
-    private int quantity = 50;
-    
-    public Items(String code, String name, BigDecimal price, String type, int quantity) {
-        this.code = code;
-        this.name = name;
-        this.price = price;
-        this.type = type;
-        this.quantity = quantity;
-    }
     
     @Override
     public String toString() {
-        return "Items{" +
-                "code='" + code + '\'' +
+        return "Item{" +
+                "id=" + id +
+                ", code='" + code + '\'' +
                 ", name='" + name + '\'' +
                 ", price=" + price +
                 ", type='" + type + '\'' +
+                ", quantity=" + quantity +
                 '}';
     }
     
@@ -51,5 +54,9 @@ public abstract class Items {
     
     public String getType() {
         return type;
+    }
+    
+    public void setId(long id) {
+        this.id = id;
     }
 }
