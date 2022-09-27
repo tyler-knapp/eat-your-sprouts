@@ -14,8 +14,7 @@ public class Menu {
     private final Account account = new Account();
     private static final Scanner scanner = new Scanner(System.in);
     
-    FileInventoryReader fileInventoryReader = new FileInventoryReader();
-    
+    private final FileInventoryReader fileInventoryReader = new FileInventoryReader();
     
      public void showWelcomeMessage(){
          System.out.println();
